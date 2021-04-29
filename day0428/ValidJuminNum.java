@@ -23,7 +23,7 @@ class TeamHWValidJumin
 		int result = 11-(total%11);
 		if (result == 10)
 			result = 1; //결과값이 10으로 나올 때는 1로 표기
-		else if(reuslt == 11)
+		if(reuslt == 11)
 			result = 0;
 
 		if (result == Integer.parseInt(temp[12])) //결과가 ㅍ(주민번호 마지막 숫자)과 같을때
