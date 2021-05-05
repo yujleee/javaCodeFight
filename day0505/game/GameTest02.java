@@ -35,7 +35,7 @@ public class GameTest02 {
 		g[4] = new Sorcerer("간달프", 40);
 		g[5] = new Sorcerer("사우론", 50);
 		
-		drawAll(g);
+		drawAll();
 		
 	}
 
