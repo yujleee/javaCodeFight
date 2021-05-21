@@ -19,29 +19,32 @@
 	String publisher = request.getParameter("publisher");
 	int price = Integer.parseInt(request.getParameter("price"));
 	
-	String driver = "oracle.jdbc.driver.OracleDriver";
-	String url= "jdbc:oracle:thin:@192.168.123.107:1521:XE";
-	String user= "c##scott";
-	String pwd= "tiger";
-	
-	String sql = "insert into book values ("+no+", '"+name+"', '"+publisher+"', "+price+")";
-	
-	Class.forName(driver);
-	
-	Connection conn = DriverManager.getConnection(url, user, pwd);
-	Statement stmt = conn.createStatement();
-	
-	int re = stmt.executeUpdate(sql);
-	
-	if (re == 1){
-		%> <p>등록 성공</p><% 
-	} else {
-		%> <p>등록 실패</p><% 
-	}
+	try{
+		String driver = "oracle.jdbc.driver.OracleDriver";
+		String url= "jdbc:oracle:thin:@192.168.123.107:1521:XE";
+		String user= "c##scott";
+		String pwd= "tiger";
 
-	stmt.close();
-	conn.close();
-	
+		String sql = "insert into book values ("+no+", '"+name+"', '"+publisher+"', "+price+")";
+
+		Class.forName(driver);
+
+		Connection conn = DriverManager.getConnection(url, user, pwd);
+		Statement stmt = conn.createStatement();
+
+		int re = stmt.executeUpdate(sql);
+
+		if (re == 1){
+			%> <p>등록 성공</p><% 
+		} else {
+			%> <p>등록 실패</p><% 
+		}
+
+		stmt.close();
+		conn.close();
+	} catch(Exception e){
+		System.out.println("예외발생" + e.getMessage());
+	}
 %>
 <%= no %><br>
 <%= name %><br>
