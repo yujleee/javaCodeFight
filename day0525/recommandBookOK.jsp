@@ -15,7 +15,9 @@
 		request.setCharacterEncoding("euc-kr");
 		String name = request.getParameter("name");
 		
-		String sql= "SELECT b.bookid, bookname, publisher, price FROM book b, (SELECT AVG(price) AS avgp FROM book b, orders o, customer c WHERE name = '"+name+"' AND o.custid = c.custid AND o.bookid = b.bookid) p WHERE b.price < p.avgp MINUS SELECT b.bookid, bookname, publisher, price FROM book b, orders o, customer c WHERE o.custid = c.custid AND o.bookid = b.bookid AND name ='"+name+"'";
+		String sql= "SELECT b.bookid, bookname, publisher, price FROM book b, (SELECT AVG(price) AS avgp FROM book b, orders o, customer c WHERE name = '"+name+"' AND o.custid = c.custid AND o.bookid = b.bookid) p "+ 
+		"WHERE b.price < p.avgp MINUS SELECT b.bookid, bookname, publisher, price FROM book b, orders o, customer c "+ 
+		"WHERE o.custid = c.custid AND o.bookid = b.bookid AND name ='"+name+"'";
 	%>
 	<h2><%= name %>님의 추천도서 목록</h2>
 	<table>
