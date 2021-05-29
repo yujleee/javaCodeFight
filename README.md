@@ -1,5 +1,6 @@
 # javaCodeFight
-### java Study
+
+## java Study
 자바 기초 문법 스터디
 
 * 자바 기초 문법 활용한 예시
