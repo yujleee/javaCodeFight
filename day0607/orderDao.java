@@ -34,11 +34,11 @@ public class orderDao {
 		} catch (Exception e) {
 			System.out.println("예외발생:" + e.getMessage());
 		}
-		
 		return no;
 	}
 	
-	public void insertOrder(String custid, String []itemno, int []qty, int []price, int []salePrice, int total, int no) {
+	public boolean insertOrder(String custid, String []itemno, int []qty, int []price, int []salePrice, int total, int no) {
+		boolean result = false;
 		try {
 			String driver = "oracle.jdbc.driver.OracleDriver";
 			Class.forName(driver);
@@ -51,9 +51,9 @@ public class orderDao {
 		
 			String sql = "insert into 주문 values("+no+", sysdate, "+total+", 'N', "+custid+")";
 			int re1 = stmt.executeUpdate(sql);
-			System.out.println(re1);
 	
-			int re2 = 0; 	
+			int re2 = 0; 
+			
 			Statement stmt2 = conn.createStatement();
 			if(re1 > 0){ 
 				//주문상세테이블에 레코드 추가 insert
@@ -65,16 +65,15 @@ public class orderDao {
 			
 			if (re1 == 1 && re2 == itemno.length){ //주문한 수만큼 insert가 되었는가?
 				conn.commit();	
-				System.out.println("주문완료");
+				result = true;
 			}else{
 				conn.rollback(); 
-				System.out.println("주문실패 ");
 			}
 			
 		} catch (Exception e){
 			System.out.println("예외발생:" + e.getMessage());
 		}
-		
+			
+		return result;		
 	}
-	
 }
