@@ -30,7 +30,13 @@
 	orderDao dao = new orderDao();
 	int no = dao.getNextNo(); //메소드를 통해 새로운 주문번호 생성
 	
-	dao.insertOrder(custid, itemno, qty, price, salePrice, total, no);	
+	boolean result = dao.insertOrder(custid, itemno, qty, price, salePrice, total, no);	
+
+	if(result){
+		%>주문이 완료되었습니다.<%
+	} else{
+		%>주문이 실패했습니다.<%
+	}	
 			
 %>
 </body>
