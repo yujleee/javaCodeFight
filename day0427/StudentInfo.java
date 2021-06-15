@@ -130,7 +130,7 @@ class InfoMenu
 				System.out.println("------------------------------------------------------");
 				System.out.println(a[i].getName() + "\t\t" + a[i].getKor() + "\t"  + a[i].getEng() + "\t"  + a[i].getMath() + "\t" 
 				 + a[i].getTot() + "\t"  + a[i].getAvg());
-         System.out.println();
+        			System.out.println();
 				break;
 			}
 		}
