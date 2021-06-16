@@ -25,13 +25,14 @@
 			request.setCharacterEncoding("euc-kr");
 			String name = request.getParameter("cname");
 		
-			String driver = "oracle.jdbc.driver.OracleDriver";
+			String driver = "oracle.jdbc.driver.OracleDriver"; //DB와의 연동
 			String url = "jdbc:oracle:thin:@localhost:1521:XE";
 			String user = "c##madang";
 			String pwd = "madang";
 			String sql = "select cname, title, rsvdate, address, r.scrno ,seatno "+ 
 					"from reservation r, tcustomer c, screen s "+
 					"where r.cno = c.cno and s.tno = r.tno and s.scrno = r.scrno and cname = '"+name+"'";
+					//고객 이름에 해당하는 예매내역을 선택하는 쿼리문 
 			
 			try{
 				Class.forName(driver);
