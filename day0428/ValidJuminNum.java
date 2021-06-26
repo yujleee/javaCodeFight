@@ -17,7 +17,7 @@ class TeamHWValidJumin
 		int []num = {2,3,4,5,6,7,8,9,2,3,4,5}; //올바른 주민번호 계산식에 필요한 숫자
 		int total = 0;
 		for (int i=0; i<num.length; i++){
-			total += num[i] * Integer.parseInt(temp[i]); // 계산식숫자 * 정수로 반환한 값 total에 누적 
+			total += num[i] * Integer.parseInt(temp[i]); // 계산식숫자 * 정수로 반환한 값을 total에 누적 
 		}
 		
 		int result = 11-(total%11);
@@ -27,7 +27,7 @@ class TeamHWValidJumin
 			result = 1;
 
 		if (result == Integer.parseInt(temp[12])) //결과가 ㅍ(주민번호 마지막 숫자)과 같을때
-			isValid = true;
+			isValid = true; //올바른 주민번호로 판단
 
 		return isValid; 
 	}
