@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(function () {
+        $("#btnInsert").click(function () {
+          const bookid = $("#bookid").val();
+          const bookname = $("#bookname").val();
+          const publisher = $("#publisher").val();
+          const price = $("#price").val();
+          $.ajax(`insertBook.jsp?bookid=${bookid}&bookname=${bookname}&publisher=${publisher}&price=${price}`, {
+            success: function (data) {
+              alert("ok");
+            },
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <!-- 사용자에게 도서번호, 도서명, 출판사명, 가격을 입력받아
+    AJAX 통신으로 새로운 도서를 추가하는 프로그래밍
+      1) Dao 에 insert를 위한 메소드 추가
+      2) 새로운 도서를 추가하는 jsp 작성
+      3) html, 자바스크립트를 완성하여 결과를 확인
+  -->
+    도서번호: <input type="text" id="bookid" /><br />
+    도서명: <input type="text" id="bookname" /><br />
+    출판사: <input type="text" id="publisher" /><br />
+    가격: <input type="text" id="price" /><br />
+    <button id="btnInsert">도서 등록</button>
+  </body>
+</html>

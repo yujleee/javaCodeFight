@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(function () {
+        $("#btnSearch").click(function () {
+          $("#bookList").empty();
+          let keyword = $("#keyword").val();
+          $.ajax(`searchBook.jsp?keyword=${keyword}`, {
+            success: function (data) {
+              $.each(data, function (index, book) {
+                //book의 속성만큼 td생성
+                let tr = $("<tr></tr>");
+                $.each(book, function (key, value) {
+                  $(tr).append($("<td></td>").html(value));
+                });
+                $("#bookList").append(tr);
+              });
+            },
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <table>
+      <thead>
+        <th>도서번호</th>
+        <th>도서명</th>
+        <th>출판사</th>
+        <th>가격</th>
+      </thead>
+      <tbody id="bookList"></tbody>
+    </table>
+    도서명: <input type="text" id="keyword" />
+    <button id="btnSearch">검색</button>
+  </body>
+</html>
