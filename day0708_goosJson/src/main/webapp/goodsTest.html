@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(function () {
+        function loadGoods() {
+          $("#goods_list").empty();
+          $.getJSON("listGoods.jsp", function (data) {
+            $.each(data, function (idx, goods) {
+              const tr = $("<tr></tr>");
+              tr.addClass("row_goods");
+              $.each(goods, function (key, value) {
+                if (key == "fname") {
+                  const img = $("<img/>")
+                    .attr({
+                      src: `images/${goods.fname}`,
+                      width: 100,
+                      height: 100,
+                    })
+                    .appendTo(tr);
+                } else {
+                  $("<td></td>").html(value).appendTo(tr);
+                }
+              });
+              $("#goods_list").append(tr);
+            });
+          });
+        }
+
+        let data;
+        function updateGoods() {
+          data = $("#F").serializeArray();
+          $.ajax({
+            url: "updateGoods.jsp",
+            data: data,
+            success: function (data) {
+              loadGoods();
+            },
+          });
+        }
+
+        loadGoods();
+
+        $("#btnInsert").click(function () {
+          $("#oper").val("INSERT");
+          updateGoods();
+        });
+
+        $("#btnUpdate").click(function () {
+          $("#oper").val("UPDATE");
+          updateGoods();
+        });
+
+        $("#btnDelete").click(function () {
+          $("#oper").val("DELETE");
+          updateGoods();
+        });
+
+        $(document).on("click", ".row_goods", function () {
+          let td_list = $(this).find("td");
+          let td_img = $(this).find("img");
+          $("#no").val($(td_list[0]).html());
+          $("#item").val($(td_list[1]).html());
+          $("#price").val($(td_list[2]).html());
+          $("#qty").val($(td_list[3]).html());
+          $("#fname").val($(td_img).attr("src").substring(7));
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <form id="F">
+      상품번호: <input type="text" name="no" id="no" /><br />
+      상품명: <input type="text" name="item" id="item" /><br />
+      가격: <input type="text" name="price" id="price" /><br />
+      수량: <input type="text" name="qty" id="qty" /><br />
+      이미지: <input type="text" name="fname" id="fname" /><br />
+      <input type="hidden" name="oper" id="oper" />
+    </form>
+    <button id="btnInsert">등록</button>
+    <button id="btnUpdate">수정</button>
+    <button id="btnDelete">삭제</button>
+    <table>
+      <thead>
+        <tr>
+          <th>상품번호</th>
+          <th>상품명</th>
+          <th>가격</th>
+          <th>수량</th>
+          <th>이미지</th>
+        </tr>
+      </thead>
+      <tbody id="goods_list"></tbody>
+    </table>
+  </body>
+</html>
