@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>상품 리스트</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      #wrap {
+        width: 800px;
+        overflow: hidden;
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .item {
+        margin: 5px;
+        padding: 5px;
+        width: 200px;
+        height: 150px;
+        border: 1px solid #ddd;
+        box-sizing: border-box;
+        justify-content: flex-start;
+      }
+
+      .item img {
+        display: inline-block;
+        margin: 10px 30px;
+      }
+
+      ul {
+        overflow: hidden;
+      }
+
+      li {
+        display: inline-block;
+        list-style: none;
+        padding: 10px;
+        cursor: pointer;
+      }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(function () {
+        let itemPerPage = 3;
+
+        function getItems(nowPage, itemPerPage) {
+          $.getJSON(
+            "getPagingListGoods.jsp",
+            {
+              nowPage: nowPage,
+              perPage: itemPerPage,
+            },
+            function (data) {
+              $.each(data, function (idx, goods) {
+                let div = $("<div></div>").addClass("item");
+                $(div).append($("<h3></h3>")).html(`${goods.no}:${goods.item}`);
+                let img = $("<img/>").attr({
+                  src: `images/${goods.fname}`,
+                  width: 50,
+                  height: 50,
+                });
+
+                $(div).append(img);
+                $(div).append($("<p></p>").html(`수량: ${goods.qty}`));
+                $(div).append($("<p></p>").html(`가격: ${goods.price}`));
+
+                $("#wrap").append(div);
+              });
+            }
+          );
+        }
+
+        $.get("getTotalCount.jsp", function (data) {
+          let totalItem = Number(data);
+          let totalPage = Math.ceil(totalItem / itemPerPage);
+
+          for (let i = 1; i <= totalPage; i++) {
+            $(".btn_paging").append($("<li></li>").html(i).attr("data-page", i));
+          }
+        });
+
+        $(document).on("click", ".btn_paging li", function () {
+          let nowPage = $(this).attr("data-page");
+          $("#wrap").empty();
+          getItems(nowPage, itemPerPage);
+        });
+
+        getItems(1, itemPerPage);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="wrap"></div>
+    <ul class="btn_paging"></ul>
+  </body>
+</html>
