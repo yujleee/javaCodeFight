@@ -33,5 +33,9 @@
 ip : <%= b.getIp() %><br>
 첨부파일 : <%= b.getFname() %><br>
 <hr>
+<a href="updateBoard.jsp?no=<%= b.getNo()%>">수정</a>
+<a href="deleteBoard.jsp?no=<%= b.getNo()%>">삭제</a>
+<a href="insertBoard.jsp?no=<%= b.getNo()%>">답글</a> 
+<!-- 부모 글번호 전달. no의 존재여부에 따라 새글/답글작성을 다르게 할 수 있음 -->
 </body>
 </html>

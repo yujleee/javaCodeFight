@@ -12,6 +12,9 @@ public class BoardVo {
 	private Date regdate;
 	private String fname;
 	private String ip;
+	private int b_ref;
+	private int b_level;
+	private int b_step;
 	public int getNo() {
 		return no;
 	}
@@ -66,8 +69,26 @@ public class BoardVo {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
+	public int getB_ref() {
+		return b_ref;
+	}
+	public void setB_ref(int b_ref) {
+		this.b_ref = b_ref;
+	}
+	public int getB_level() {
+		return b_level;
+	}
+	public void setB_level(int b_level) {
+		this.b_level = b_level;
+	}
+	public int getB_step() {
+		return b_step;
+	}
+	public void setB_step(int b_step) {
+		this.b_step = b_step;
+	}
 	public BoardVo(int no, String title, String writer, String pwd, String content, int hit, Date regdate, String fname,
-			String ip) {
+			String ip, int b_ref, int b_level, int b_step) {
 		super();
 		this.no = no;
 		this.title = title;
@@ -78,10 +99,14 @@ public class BoardVo {
 		this.regdate = regdate;
 		this.fname = fname;
 		this.ip = ip;
+		this.b_ref = b_ref;
+		this.b_level = b_level;
+		this.b_step = b_step;
 	}
 	public BoardVo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	
 }
