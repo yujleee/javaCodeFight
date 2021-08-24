@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+  <select id="findAll" resultType="boardVO">
+  select no,title,writer,pwd,content,hit,regdate,fname,fsize,ip,b_ref,b_level,b_step
+from (select rownum n, no,title,writer,pwd,content,hit,regdate,fname,fsize,ip,b_ref,b_level,b_step from(
+select * from board order by b_ref desc, b_step)) 
+where n between #{start} and #{end}
+  </select>
+  
+  <insert id="insert" parameterType="boardVO">
+  	insert into board(no, title, writer, pwd, content, 
+  	hit, regdate, fname, fsize, ip, b_ref, b_level, b_step) 
+  	values(#{no}, #{title}, #{writer}, #{pwd}, #{content}, 0, sysdate, 
+  	#{fname}, #{fsize}, #{ip}, #{b_ref}, #{b_level}, #{b_step})
+  </insert>
+  
+  <select id="getNextNo" resultType="int">
+  	select nvl(max(no),0)+1 from board
+  </select>
+  
+  <select id="getBoard" resultType="boardVO">
+  	select * from board where no=#{no}
+  </select>
+  
+  <update id="updateHit" parameterType="int">
+  	update board set hit=hit+1 where no=#{no}
+  </update>
+  
+  <update id="updateStep">
+  	update board set b_step = b_step+1 where b_ref=#{b_ref} and b_step > #{b_step}
+  </update>
+  
+  <update id="updateBoard" parameterType="boardVO">
+  	update board set title=#{title}, content=#{content}, fname=#{fname},
+  	fsize=#{fsize} where no=#{no} and pwd=#{pwd}
+  </update>
+  
+  <delete id="deleteBoard">
+  	delete from board where no=#{no} and pwd=#{pwd}
+  </delete>
+  
+  <select id="totalRecord" resultType="int">
+  	select count(*) from board
+  </select>
+  
+  <insert id="insertLog" parameterType="sist_log">
+  	insert into Sist_log(no,uri,time,stay,ip) values(seq_log.nextval, #{uri}, #{time}, #{stay}, #{ip})
+  </insert>
+  
+</mapper>
